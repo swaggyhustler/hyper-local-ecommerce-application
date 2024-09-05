@@ -16,7 +16,12 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true
+    },
+    role: {
+        type: String,
+        enum: ['user', 'owner'],
+        default: 'user',
     }
 });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('Users', userSchema);

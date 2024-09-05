@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const locationSchema = new mongoose.Schema({
     shop_id: {
         type: mongoose.Types.ObjectId,
-        ref: "Shop",
+        ref: "Shops",
         required: true
     },
     type: {
