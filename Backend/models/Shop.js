@@ -9,6 +9,29 @@ const shopSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Users',
         required: true
+    },
+    type: {
+        type: String,
+        default: "Feature"
+    },
+    properties: {
+        description: String,
+        icon: String
+    },
+    geometry: {
+        type:{
+            type: String,
+            enum: ['Point'],
+            default: 'Point'
+        },
+        coordinates:{
+            type: [Number],
+            index: '2dsphere'
+        }
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

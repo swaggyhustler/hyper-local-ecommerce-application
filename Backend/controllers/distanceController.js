@@ -4,7 +4,7 @@ import Shop from "../models/Shop.js";
 const getNearestShops = async (req, res)=>{
     try{    
         const {coordinates} = req.body;
-        const data = await Location.find({
+        const data = await Shop.find({
             geometry: {
                 $near: {
                         $geometry: { type: "Point",  coordinates },

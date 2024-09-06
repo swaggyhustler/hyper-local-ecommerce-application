@@ -1,5 +1,6 @@
 import Login from './components/Login';
 import Register from './components/Register';
+import RegisterShop from './components/RegisterShop';
 import { ToastContainer } from 'react-toastify';
 import {Routes, Route} from 'react-router-dom';
 const App = () =>{
@@ -9,6 +10,7 @@ const App = () =>{
     <Routes>
       <Route path='/' element={<Register />}/>
       <Route path='/login' element={<Login />}/>
+      <Route path='/registerShop' element={<RegisterShop />} />
     </Routes>
     </>
   )

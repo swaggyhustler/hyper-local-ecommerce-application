@@ -24,6 +24,9 @@ const Register = ()=>{
             const result = await axios.post("http://localhost:5000/api/v1/auth/register", registerData);
             if(result.data.success){
                 toast.success("registration Successfull...!");
+                if(result.data.data.role==='owner'){
+                    return navigate("/registerShop", {state: {owner_id: result.data.data._id}});
+                }
                 navigate("/login");
             }else{
                 toast.error("Wrong Details...!");
@@ -72,7 +75,7 @@ const Register = ()=>{
                 </div>
             </div>
             <button type="submit" className=" mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-            <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+            <button onClick={()=>history.push({pathname: '/login'})} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
             </form>
         </div>
     )
