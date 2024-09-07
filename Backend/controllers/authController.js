@@ -4,15 +4,21 @@ import { hashPassword, comparePassword } from "../utils/authUtility.js";
 const login = async (req, res)=>{
     const {email, password, role} = req.body;
     let user=null;
+
     if(role==='user'){
         user = await User.findOne({email});
-    }else{
+    }else if (role==='owner'){
         user = await Owner.findOne({email});
+    }else{
+        return res.status(200).json({message: 'Please Select the role', success: false});
     }
+
     if(user===null){
-        return res.status(200).json({message: 'Cannot find the user with given info', success: false});
+        return res.status(200).json({message: 'Cannot fetch user with the details provided', success: false});
     }
+
     let userAuthenticated = await comparePassword(password, user.password);
+
     if(userAuthenticated){
         res.status(200).json({message: "User is Authenticated", success: true, data: user});
     }else{
