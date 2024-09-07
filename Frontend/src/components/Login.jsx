@@ -34,7 +34,7 @@ const Login = ()=>{
     }
 
     return (
-        <div className="h-screen w-screen flex justify-center items-center ">
+        <div className="h-screen w-full flex justify-center items-center ">
             <form className="max-w-lg mx-auto shadow-lg p-6 rounded-lg" onSubmit={handleSubmit}>
                 <h1 className="text-3xl font-bold text-center inline-block w-96">Hyper Local E-Commerce Application</h1>
                 <h3 className="text-center text-2xl font-bold my-4 text-blue-300">Welcome</h3>

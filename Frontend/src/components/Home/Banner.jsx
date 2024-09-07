@@ -25,7 +25,7 @@ const Banner = () => {
           <div className="mt-8 flex flex-wrap gap-4 text-center">
             <a
               href="#"
-              className="block w-full rounded bg-[#EC1B24] px-12 py-3 text-sm font-medium text-white shadow   sm:w-auto"
+              className="block w-full rounded bg-[#ec1b24] px-12 py-3 text-sm font-medium text-white shadow   sm:w-auto"
             >
               Search Product
             </a>

@@ -1,11 +1,18 @@
 import React from "react";
 import Banner from "./Banner";
-import ShopCard from "../Cards/ShopCard";
+import ShopsSection from "./ShopsSection";
+import AboutUs from "./AboutUs";
+import Testimonials from "./Testimonials";
+import ContactUs from "./ContactUs"
 const Home = () => {
   return (
     <>
     <Banner/>
-    <ShopCard distance={100} name={"xyz"} duration={"cb"}/>
+    <ShopsSection/>
+    <AboutUs/>
+    <Testimonials/>
+    <ContactUs/>
+    
       
      
     </>
