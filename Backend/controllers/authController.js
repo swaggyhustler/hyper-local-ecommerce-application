@@ -8,7 +8,7 @@ const login = async (req, res)=>{
     }
     let userAuthenticated = await comparePassword(password, user.password);
     if(userAuthenticated){
-        res.status(200).json({message: "User is Authenticated", success: true});
+        res.status(200).json({message: "User is Authenticated", data:user,success: true});
     }else{
         res.status(200).json({message: 'User is not Authenticated', success: false});
     }
