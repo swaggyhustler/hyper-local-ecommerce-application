@@ -2,9 +2,11 @@ import {useState} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS
+import {useNavigate} from "react-router-dom"
 
 const Login = ()=>{
     const [loginData, setLoginData] = useState(null);
+    const navigate=useNavigate()
 
     const handleChange=(e)=>{
         const {name, value} = e.target;
@@ -22,6 +24,7 @@ const Login = ()=>{
             let result = await axios.post("http://localhost:5000/api/v1/auth/login", loginData);
             if(result.data.success){
                 toast.success("Login Successfull...!");
+                navigate("/home")
             }else{
                 toast.error("Wrong Details...!");
             }
@@ -57,10 +60,13 @@ const Login = ()=>{
                         Owner
                         </label>
                     </div>
-                </div>
-                        <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
-                    </form>
-                </div>
+                    <div className='flex justify-around'>
+                    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+                    <button onClick={()=>navigate("/register")} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</button>
+                    </div>
+
+                </form>
+            </div>
     )
 }
 
