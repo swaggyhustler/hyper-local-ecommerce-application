@@ -11,7 +11,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^1.7.7",
+=======
+    "backend": "file:",
+>>>>>>> 59651ff9da86494047422ec120a2abf7574a07bb
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
