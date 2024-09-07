@@ -7,7 +7,7 @@ const shopSchema = new mongoose.Schema({
     },
     owner_id: {
         type: mongoose.Types.ObjectId,
-        ref: 'Users',
+        ref: 'Owners',
         required: true
     },
     type: {

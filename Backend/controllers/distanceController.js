@@ -1,4 +1,4 @@
-import Location from "../models/Location.js";
+
 import Shop from "../models/Shop.js";
 
 const getNearestShops = async (req, res)=>{
