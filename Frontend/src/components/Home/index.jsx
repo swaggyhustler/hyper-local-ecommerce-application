@@ -8,6 +8,7 @@ import { useEffect,useState } from "react";
 import {toast} from "react-toastify"
 const Home = () => {
 
+
   const [coordinates, setCoordinates] = useState(null);
     const fetchLocation = ()=>{
         return new Promise((resolve, reject)=>{
