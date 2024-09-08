@@ -40,16 +40,16 @@ const getNearestShops = async (req, res)=>{
 
         const token = await generateToken();        
         const result = await axios.get(`https://apis.mappls.com/advancedmaps/v1/${token}/distance_matrix/biking/${query}`);
-        
+        data.shift();
         const finalData = data.map((item, index)=>{
             return {
                 'owner_id': item.owner_id,
                 'shopName': item.properties.description,
+                'shop_id': item._id,
                 'distance': (result.data.results.distances[0][index]/1000).toFixed(2),
                 'duration': (result.data.results.durations[0][index]/60).toFixed(2),
             }
         });
-
         res.status(200).json({message: "Locations fetched successfully", data: finalData});
     }catch(error){
         console.log("Cannot find the nearest Shops, Something went wrong", error);

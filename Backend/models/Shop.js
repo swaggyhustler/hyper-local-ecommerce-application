@@ -29,6 +29,9 @@ const shopSchema = new mongoose.Schema({
             index: '2dsphere'
         }
     },
+    image_url: {
+        type: String
+    },
     createdAt: {
         type: Date,
         default: Date.now
