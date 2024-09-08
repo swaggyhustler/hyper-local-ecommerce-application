@@ -1,45 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Banner from "./Banner";
 import ShopsSection from "./ShopsSection";
 import AboutUs from "./AboutUs";
 import Testimonials from "./Testimonials";
-import ContactUs from "./ContactUs"
-import { useEffect,useState } from "react";
-import {toast} from "react-toastify"
+import ContactUs from "./ContactUs";
+import { fetchShops } from "../../store/shopsSlice";
+
 const Home = () => {
-
-
-  const [coordinates, setCoordinates] = useState(null);
-    const fetchLocation = ()=>{
-        return new Promise((resolve, reject)=>{
-          navigator.geolocation.getCurrentPosition((position)=>{
-            resolve({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            });
-            }, (error)=>{
-            console.log("E: Error getting users current locaiton");
-            reject(error);
-          });
-        });
-    }
+  const dispatch = useDispatch();
   
-    useEffect( ()=>{
-        fetchLocation().then((location)=>{
-          setCoordinates(location);
-        });
-    },[]);
 
-    console.log(coordinates);
+  const fetchLocation = () => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve([
+          
+            position.coords.latitude,
+            position.coords.longitude
+           
+          ]);
+        },
+        (error) => {
+          console.log("Error getting user's current location:", error);
+          reject(error);
+        }
+      );
+    });
+  };
+
+  useEffect(() => {
+    fetchLocation()
+      .then((location) => {
+        console.log(location)
+        dispatch(fetchShops(location));  // Dispatches with location directly
+      })
+      .catch((error) => {
+        console.log("Failed to fetch location", error);
+      });
+  }, [dispatch]);
+
   return (
     <>
-    <Banner/>
-    <ShopsSection/>
-    <AboutUs/>
-    <Testimonials/>
-    <ContactUs/>
+      <Banner />
+      <ShopsSection />
+      <AboutUs />
+      <Testimonials />
+      <ContactUs />
     </>
-  )
+  );
 };
 
 export default Home;
