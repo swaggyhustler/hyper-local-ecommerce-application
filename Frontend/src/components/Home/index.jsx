@@ -8,33 +8,29 @@ import { useEffect,useState } from "react";
 import {toast} from "react-toastify"
 const Home = () => {
 
-  const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
-  const getLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCoordinates({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+
+  const [coordinates, setCoordinates] = useState(null);
+    const fetchLocation = ()=>{
+        return new Promise((resolve, reject)=>{
+          navigator.geolocation.getCurrentPosition((position)=>{
+            resolve({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            });
+            }, (error)=>{
+            console.log("E: Error getting users current locaiton");
+            reject(error);
           });
-        },
-        (error) => {
-          toast.error(error.message)
-        }
-      );
-    } else {
-      console.log("error in fetching location")
+        });
     }
-    
-  }
   
-      useEffect( ()=>{
+    useEffect( ()=>{
+        fetchLocation().then((location)=>{
+          setCoordinates(location);
+        });
+    },[]);
 
-        getLocation()
-        console.log(coordinates)
-
-      },[])
-
+    console.log(coordinates);
   return (
     <>
     <Banner/>
