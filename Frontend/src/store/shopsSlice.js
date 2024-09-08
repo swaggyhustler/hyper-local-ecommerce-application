@@ -7,7 +7,7 @@ export const fetchShops = createAsyncThunk(
   async (location) => {
     console.log({coordinates:location})
     console.log(location)
-    const response = await axios.get("http://localhost:5000/api/v1/get/nearestShops", {coordinates:location}); // locationData is the object
+    const response = await axios.post("http://localhost:5000/api/v1/get/nearestShops", {coordinates:location}); // locationData is the object
     return response.data;
   }
 );
