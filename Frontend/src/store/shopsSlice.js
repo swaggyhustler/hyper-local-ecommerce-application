@@ -4,8 +4,10 @@ import axios from "axios";
 // Async thunk to fetch shops data with latitude and longitude in a POST request using Axios
 export const fetchShops = createAsyncThunk(
   "shops/fetchShops",
-  async (locationData) => {
-    const response = await axios.get("http://localhost:5000/api/v1/get/nearestShops", locationData); // locationData is the object
+  async (location) => {
+    console.log({coordinates:location})
+    console.log(location)
+    const response = await axios.get("http://localhost:5000/api/v1/get/nearestShops", {coordinates:location}); // locationData is the object
     return response.data;
   }
 );
@@ -26,6 +28,7 @@ const shopsSlice = createSlice({
       })
       .addCase(fetchShops.fulfilled, (state, action) => {
         state.loading = false;
+      
         state.shops = action.payload.data;
       })
       .addCase(fetchShops.rejected, (state, action) => {
