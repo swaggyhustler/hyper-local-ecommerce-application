@@ -11,7 +11,7 @@ const getNearestShops = async (req, res)=>{
                 $near: {
                         $geometry: { type: "Point",  coordinates },
                         $minDistance: 0,
-                        $maxDistance: 2000
+                        $maxDistance: 5000
                     }
                 }
         });
