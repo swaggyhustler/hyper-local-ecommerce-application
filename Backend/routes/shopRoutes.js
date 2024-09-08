@@ -5,6 +5,6 @@ const router=express.Router();
 
 router.post('/add/shop', addShop);
 router.post('/add/product', addProduct);
-router.get('/getNearestShops', getNearestShops);
+router.get('/get/nearestShops', getNearestShops);
 
 export default router;

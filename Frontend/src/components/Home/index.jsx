@@ -8,7 +8,32 @@ import { useEffect,useState } from "react";
 import {toast} from "react-toastify"
 const Home = () => {
 
+  const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCoordinates({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          toast.error(error.message)
+        }
+      );
+    } else {
+      console.log("error in fetching location")
+    }
+    
+  }
   
+      useEffect( ()=>{
+
+        getLocation()
+        console.log(coordinates)
+
+      },[])
 
   return (
     <>
@@ -17,9 +42,6 @@ const Home = () => {
     <AboutUs/>
     <Testimonials/>
     <ContactUs/>
-    
-      
-     
     </>
   )
 };
