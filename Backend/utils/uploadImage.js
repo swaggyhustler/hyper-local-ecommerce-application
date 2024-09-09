@@ -4,7 +4,7 @@ import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase
 
 const uploadImage = async (file) =>{
     const dateTime = Date.now();
-    const fileName= `images/${dateTime}`;
+    const fileName= `shops_images/${dateTime}`;
     const storageRef = ref(storage, fileName);
     const metadata = {
         contentType: file.mimetype
