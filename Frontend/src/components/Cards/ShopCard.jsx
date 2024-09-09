@@ -2,7 +2,8 @@ import React from 'react';
 import { FaClock, FaMapMarkerAlt } from 'react-icons/fa';
 import bannerImage from "../../assets/bannerImage.jpg";
 
-const ShopCard = ({ name, duration, distance, image }) => {
+const ShopCard = ({ shopName, duration, distance, image }) => {
+  
   return (
     <div className="w-[22%] bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 mb-2">
       <a href="#">
@@ -14,16 +15,16 @@ const ShopCard = ({ name, duration, distance, image }) => {
       </a>
       <div className="p-4">
         <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-800">
-          {name}
+          {shopName}
         </h5>
-        <div className="flex items-center mb-4 gap-4 text-gray-600">
-          <div className="flex items-center">
+        <div className="flex items-center mb-4 gap-2 text-gray-600">
+          <div className="flex items-center ">
             <FaClock className="mr-1 text-blue-500" />
-            <span className="text-sm font-medium">Duration: {duration}</span>
+            <span className="text-sm font-medium">Duration: {duration} Min.</span>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center ">
             <FaMapMarkerAlt className="mr-1 text-red-500" />
-            <span className="text-sm font-medium">Distance: {distance}</span>
+            <span className="text-sm font-medium">Distance: {distance} Km</span>
           </div>
         </div>
         <a

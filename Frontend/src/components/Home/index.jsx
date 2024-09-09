@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Banner from "./Banner";
 import ShopsSection from "./ShopsSection";
 import AboutUs from "./AboutUs";
 import Testimonials from "./Testimonials";
 import ContactUs from "./ContactUs";
+
 import { fetchShops } from "../../store/shopsSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
-  
+ 
 
   const fetchLocation = () => {
     return new Promise((resolve, reject) => {
