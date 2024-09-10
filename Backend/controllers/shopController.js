@@ -32,7 +32,7 @@ const addProduct = async (req, res)=>{
 
 const searchProduct = async (req, res)=>{
     try{
-
+        console.log(req.body)
         const {coordinates, keyword} = req.body;
         const data = await Shop.find({
             geometry: {
@@ -58,5 +58,6 @@ const searchProduct = async (req, res)=>{
         res.status(200).json({message: "Cannot perform Search Operation on Products", success: false});
     }
 }
+
 
 export {addShop, addProduct, searchProduct};

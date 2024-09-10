@@ -8,6 +8,6 @@ const router=express.Router();
 router.post('/add/shop', upload.single('image'), addShop);
 router.post('/add/product', upload.single('image'), addProduct);
 router.post('/get/nearestShops', getNearestShops);
-router.get('/search/product', searchProduct);
+router.post('/search/product', searchProduct);
 
 export default router;
