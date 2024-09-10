@@ -59,4 +59,13 @@ const searchProduct = async (req, res)=>{
     }
 }
 
-export {addShop, addProduct, searchProduct};
+const getProducts = async (req, res)=>{
+    try{
+        const products = await Products.find({shop_id: req.params.shopID});
+        res.send({message: "Products related to shop fetched successfully", success: true, data: products});
+    }catch(error){
+        res.send({message: "Cannot fetch products from the shop", success: false});
+    }
+}
+
+export {addShop, addProduct, searchProduct, getProducts};
