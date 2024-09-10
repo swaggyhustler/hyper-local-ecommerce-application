@@ -19,7 +19,7 @@ const Navbar = () => {
           user.role=="user" && 
            <>
            <Link to="/orders">My Orders</Link>
-           <Link to="/orders">Search Products</Link>
+           <Link to="/search">Search Products</Link>
            <Link to="/shops">All Shops</Link>
            </>
           

@@ -32,7 +32,7 @@ const addProduct = async (req, res)=>{
 
 const searchProduct = async (req, res)=>{
     try{
-
+        console.log(req.body)
         const {coordinates, keyword} = req.body;
         const data = await Shop.find({
             geometry: {
