@@ -7,7 +7,7 @@ const ShopsSection = () => {
   return (
     <div>
          <div className="w-full flex justify-center items-center my-4">
-           <h2 className="text-4xl font-bold">Near By <span className="text-[#ec1b24]">Shops</span> </h2>
+           <h2 className="text-3xl font-bold">Near By <span className="text-4xl text-[#ec1b24]">Shops</span> </h2>
          </div>
          {
             loading ?
@@ -17,7 +17,7 @@ const ShopsSection = () => {
               {
                 shops?.slice(1,5).map((shop)=>{
                 
-                return  <ShopCard shopName={shop.shopName} distance={shop.distance} duration={shop.duration} image={shop.image}/>
+                return  <ShopCard shop={shop}/>
                   
                 })
               }

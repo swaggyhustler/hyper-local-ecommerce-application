@@ -5,12 +5,14 @@ import ShopsSection from "./ShopsSection";
 import AboutUs from "./AboutUs";
 import Testimonials from "./Testimonials";
 import ContactUs from "./ContactUs";
-
+import { changeFetch } from "../../store/fetchSlice";
 import { fetchShops } from "../../store/shopsSlice";
 
 const Home = () => {
+
   const dispatch = useDispatch();
- 
+  const fetch=useSelector((state)=>state.fetch)
+
 
   const fetchLocation = () => {
     return new Promise((resolve, reject) => {
@@ -34,8 +36,13 @@ const Home = () => {
   useEffect(() => {
     fetchLocation()
       .then((location) => {
-        console.log(location)
-        dispatch(fetchShops(location));  // Dispatches with location directly
+      
+        if (fetch){
+          dispatch(fetchShops(location)); 
+          dispatch(changeFetch())
+        }
+      
+        
       })
       .catch((error) => {
         console.log("Failed to fetch location", error);
