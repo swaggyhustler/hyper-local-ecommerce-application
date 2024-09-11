@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const ownerSchema = mongoose.Schema({
+const ownerSchema = new mongoose.Schema({
     owner_name: {
         type: String,
         required: true

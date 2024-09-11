@@ -6,8 +6,8 @@ const generateToken= async ()=>{
 
     const formData = qs.stringify({
         grant_type: "client_credentials",
-        client_id: "96dHZVzsAuv20IWCfMxHc6Uf6L8Tbi0xJNgKibjV2YJLHlByTOq1oMRWsjdwPM0_pSBw7wnbZz6YDQdllQDfHQVUoiP6oX42",
-        client_secret: "lrFxI-iSEg8X6iZXS0T0zrBeOdKLSy8bVDWhqm13QfQMSVlvyEiQpPghTiOioaFup-dOXYsab3Rs2_ck3SfgQbHh-9adjoeZBTXuoc5qfqI="
+        client_id: process.env.MAPPLS_TOKEN,
+        client_secret: process.env.MAPPLS_SECRET
     });
 
     const result = await axios({method: "post", data: formData, url: tokenURL, headers: {

@@ -7,7 +7,7 @@ const Navbar = () => {
   const user={role:"user"}
   return (
     <nav className="w-full h-20  flex justify-between items-center px-10 bg-gray-100">
-      <div className="font-bold flex items-center w-[25%]  gap-2">
+      <div className="font-bold flex items-center w-[22%]  gap-2">
         <img src={logo} alt="" className="w-16 h-16 rounded-full mix-blend-multiply"/>
         <h2>Hyper Local Ecommerce Application</h2>
 

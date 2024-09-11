@@ -1,6 +1,8 @@
 import Shop from '../models/Shop.js';
 import Products from '../models/Product.js';
 import {uploadImage} from '../utils/uploadImage.js';
+import { generateToken } from '../utils/mapplsToken.js';
+import axios from 'axios';
 
 const addShop = async (req, res)=>{
     try{
@@ -34,7 +36,7 @@ const searchProduct = async (req, res)=>{
     try{
         console.log(req.body)
         const {coordinates, keyword} = req.body;
-        const data = await Shop.find({
+        const shops = await Shop.find({
             geometry: {
                 $near: {
                         $geometry: { type: "Point",  coordinates },
@@ -42,9 +44,9 @@ const searchProduct = async (req, res)=>{
                         $maxDistance: 5000
                     }
                 }
-        }, {_id: 1});
+        });
 
-        const ids = data.map(id=>id._id);
+        const ids = shops.map(item=>item._id);
         const products = await Products.find({shop_id: {$in: ids} });
         const regex = new RegExp(keyword, 'i');
 
@@ -52,9 +54,54 @@ const searchProduct = async (req, res)=>{
             regex.test(product.name) || regex.test(product.description)
         );
 
+        shops.unshift({
+            properties:{description: 'Current Location'},
+            geometry:{coordinates: coordinates}
+        });
+
+        const destinations = shops.map((item)=>{
+            return (
+                `${item.geometry.coordinates[1]},${item.geometry.coordinates[0]};`
+            )
+        });
+
+        let query = "";
+        let i=destinations.length-1;
+
+        destinations.forEach((item, index)=>{
+            if(index==i)
+                query+=item.substring(0,item.length-2);
+            else
+                query+=item;    
+                
+        });
+
+        const token = await generateToken();
+        console.log("**********API is being hit from the frontend*********");
+        const metaData = await axios.get(`https://apis.mappls.com/advancedmaps/v1/${token}/distance_matrix/biking/${query}`);
+        shops.shift();
+        let finalData={};
+        shops.forEach((item, index)=>{
+                finalData[item._id]={
+                    'owner_id': item.owner_id,
+                    'shopName': item.properties.description,
+                    'distance': (metaData.data.results.distances[0][index]/1000).toFixed(2),
+                    'duration': (metaData.data.results.durations[0][index]/60).toFixed(2),
+                }
+        });
+
+        result.forEach((item, index)=>{
+            result[index]={
+                ...item._doc,
+                'distance': finalData[item.shop_id].distance,
+                'shopName': finalData[item.shop_id].shopName
+            }
+        });
+
         res.status(200).json({message: "Products fetched successfully", success: true, data: result});    
     }catch(error){
         console.log("Cannot perform Search Operation on Products");
+        console.log(error);
         res.status(200).json({message: "Cannot perform Search Operation on Products", success: false});
     }
 }
