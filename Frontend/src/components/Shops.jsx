@@ -22,7 +22,7 @@ const Shops = () => {
               {
                 shops?.map((shop)=>{
                 
-                return  <ShopCard shopName={shop.shopName} distance={shop.distance} duration={shop.duration} image={shop.image}/>
+                return  <ShopCard shop={shop}/>
                   
                 })
               }
