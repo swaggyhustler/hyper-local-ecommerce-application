@@ -1,12 +1,17 @@
-import {useState} from 'react';
-import axios from 'axios';
+import {useEffect, useState} from 'react';
+// import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS
 import {useNavigate} from "react-router-dom"
+import {useSelector, useDispatch} from 'react-redux';
+import { login } from '../store/authSlice';
+import { setSuccess } from '../store/authSlice';
 
 const Login = ()=>{
     const [loginData, setLoginData] = useState(null);
     const navigate=useNavigate()
+    const {success, message} = useSelector((state)=>state.auth);
+    const dispatch = useDispatch();
 
     const handleChange=(e)=>{
         const {name, value} = e.target;
@@ -21,18 +26,24 @@ const Login = ()=>{
             console.log("Provide Data");
         }
         try{
-            let result = await axios.post("http://localhost:5000/api/v1/auth/login", loginData);
-            if(result.data.success){
-                toast.success("Login Successfull...!");
-                navigate("/home")
-            }else{
-                toast.error("Wrong Details...!");
-            }
+            // let result = await axios.post("http://localhost:5000/api/v1/auth/login", loginData);
+            dispatch(login(loginData));
         }catch(error){
             console.log("Cannot send login details to backend", error);
         }
     }
 
+    useEffect(()=>{
+        if(success){
+            // toast.success("Login Successfull...!");
+            toast.success(message);
+            console.log("Something");
+            navigate("/home")
+            setSuccess(false);
+        }else{
+            toast.error(message);
+        }
+    }, [success]);
     return (
         <div className="h-screen w-full flex justify-center items-center ">
             <form className="max-w-lg mx-auto shadow-lg p-6 rounded-lg" onSubmit={handleSubmit}>

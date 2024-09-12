@@ -1,6 +1,7 @@
 import Owner from "../models/Owner.js";
 import User from "../models/User.js";
 import { hashPassword, comparePassword } from "../utils/authUtility.js";
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 const login = async (req, res)=>{
     const {email, password, role} = req.body;
     let user=null;
@@ -20,6 +21,7 @@ const login = async (req, res)=>{
     let userAuthenticated = await comparePassword(password, user.password);
 
     if(userAuthenticated){
+        generateTokenAndSetCookie(res, user._id, user.role);
         res.status(200).json({message: "User is Authenticated", success: true, data: user});
     }else{
         res.status(200).json({message: 'User is not Authenticated', success: false});
@@ -28,14 +30,14 @@ const login = async (req, res)=>{
 
 const registerUser= async (req, res)=>{
     try{
-        const {username, password, email, phone} = req.body;
+        const {username, password, email, phone, role} = req.body;
         const existingUser = await User.findOne({email});
         if(existingUser){
             return res.status(200).json({message: "User already exists", data: existingUser, success: false});
         }
         const hashedPassword= await hashPassword(password);
-        const newUser = await User.create({username, password: hashedPassword, email, phone});
-        newUser.save();
+        const newUser = new User({username, password: hashedPassword, email, phone, role});
+        await newUser.save();
         res.status(201).json({message: "User registered successfully", data: newUser, success: true});
     }catch(error){
         console.log("Cannot register User to the Application");
@@ -60,4 +62,9 @@ const registerOwner= async (req, res)=>{
     }
 }
 
-export {login, registerUser, registerOwner};
+const logout = (req, res)=>{
+    res.clearCookie("token");
+    res.status(200).json({message: "Logged out of the application sucessfully", success: true});
+}
+
+export {login, registerUser, registerOwner, logout};
