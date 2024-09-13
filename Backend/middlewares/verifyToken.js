@@ -6,7 +6,7 @@ export const verifyToken = async (req, res, next)=>{
         if(!token){
             return res.status(401).json({message: "Unauthorized - Token not provided", success: false});
         }
-        const decoded = jwt.verify(token, process.env.JSON_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         if(!decoded){
             return res.status(401).json({message: "Unauthorized - Invalid Token", success: false});
         }

@@ -21,7 +21,7 @@ const Login = ()=>{
             console.log("Provide Data");
         }
         try{
-            login(loginData);
+            await login(loginData);
             navigate('/home');
         }catch(error){
             console.log("Cannot send login details to backend", error);

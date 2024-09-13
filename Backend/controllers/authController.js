@@ -1,6 +1,34 @@
 import Owner from "../models/Owner.js";
 import User from "../models/User.js";
 import { hashPassword, comparePassword } from "../utils/authUtility.js";
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
+
+const checkAuth = async (req, res)=>{
+    const {user_id, role} = req.body;
+    try{
+        let user = null;
+        if(role === 'user'){
+            user = await User.findById(user_id);
+        }else if(role == 'owner'){
+            user = await Owner.findById(user_id);
+        }else{
+            return res.status(401).json({message: "User not found", success: false});
+        }
+
+        res.status(200).json({
+            message: "User is authorized", 
+            success: true, 
+            user: {
+                ...user._doc,
+                password: undefined
+            }
+        });
+    }catch(error){
+        console.log("Cannot perfrom authorization of user");
+        res.status(500).json({message: "Cannot authorize user", success: false});
+    }
+}
+
 const login = async (req, res)=>{
     const {email, password, role} = req.body;
     let user=null;
@@ -20,6 +48,7 @@ const login = async (req, res)=>{
     let userAuthenticated = await comparePassword(password, user.password);
 
     if(userAuthenticated){
+        const token = generateTokenAndSetCookie(res, user._id, user.role);
         res.status(200).json({message: "User is Authenticated", success: true, data: user});
     }else{
         res.status(200).json({message: 'User is not Authenticated', success: false});
@@ -60,4 +89,9 @@ const registerOwner= async (req, res)=>{
     }
 }
 
-export {login, registerUser, registerOwner};
+const logout = (req, res)=>{
+    res.clearCookie("token");
+    res.status(200).json({message: "Logged out of the application sucessfully", success: true});
+}
+
+export {login, registerUser, registerOwner, logout, checkAuth};

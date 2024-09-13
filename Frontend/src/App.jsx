@@ -10,6 +10,7 @@ import Shops from './components/Shops';
 import SearchPage from './components/SearchPage';
 import ShopDetails from './components/ShopDetails';
 import { useAuthStore } from './store/authStore';
+import { useEffect } from 'react';
 
 const ProtectedRoute = ({children})=>{
 const {isAuthenticated} = useAuthStore();
@@ -20,6 +21,14 @@ const {isAuthenticated} = useAuthStore();
 }
 
 const App = () =>{
+  const {checkAuth, user, isAuthenticated} = useAuthStore();
+  useEffect(()=>{
+    checkAuth();
+  }, [checkAuth]);
+  
+  console.log("is Authenticated ", isAuthenticated);
+  console.log("User ", user);
+  
   return (
     <>
     <ToastContainer />

@@ -1,7 +1,11 @@
 import {create} from 'zustand';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
 const API_URL = "http://localhost:5000/api/v1/auth";
+
+axios.defaults.withCredentials=true;
+
 export const useAuthStore = create((set)=>({
     user: null,
     isAuthenticated: false,
@@ -46,6 +50,28 @@ export const useAuthStore = create((set)=>({
             toast.error(error.response.data.message);
             set({isLoading: false, error: error.response.data.message});
             throw error;
+        }
+    },
+
+    logout: async ()=>{
+        set({isLoading: true, error: null});
+        try{
+            await axios.get(`${API_URL}/logout`);
+            set({isLoading: false, user: null, isAuthenticated: false, error: null});
+        }catch(error){
+            toast.error(error.message);
+            set({isLoading: false, error: error.message});
+            throw error;
+        }
+    },
+
+    checkAuth: async ()=>{
+        set({isCheckingAuth: true, error: null});
+        try{
+            const response = await axios.get(`${API_URL}/check-auth`);
+            set({isCheckingAuth: false, isAuthenticated: true, user: response.data})
+        }catch(error){
+            set({error: error.response.data.message, isCheckingAuth: false, isAuthenticated: false});
         }
     }
 }))
