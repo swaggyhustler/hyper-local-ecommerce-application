@@ -16,7 +16,17 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true
-    }
-});
+    },
+    role: {
+        type: String,
+        enum: ['user']
+    },
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
+    verificationToken: String,
+    verificationTokenExpiresAt: Date
+}, {timestamps: true});
 
 export default mongoose.model('Users', userSchema);

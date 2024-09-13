@@ -16,11 +16,12 @@ const App = () =>{
     <ToastContainer />
     <Navbar />
     <Routes>
-      {/* <Route path='/' element={<Login />}/> */}
-      <Route path='/' element={<Home />} />
-      {/* <Route path='/login' element={<Login />}/>
+      <Route path='/' element={<Login />}/>
+      {/* <Route path='/' element={<Home />} /> */}
+      <Route path='/home' element={<h1>This is awesome!</h1>}/>
+      <Route path='/login' element={<Login />}/>
       <Route path='/registerOwner' element={<OwnerRegistration />} />
-      <Route path='/register' element={<Register />}/> */}
+      <Route path='/register' element={<Register />}/> 
       <Route path='/shops' element={<Shops/>}/>
       <Route path='/search' element={<SearchPage/>}/>
       <Route path='/shopDetails' element={<ShopDetails/>}/>

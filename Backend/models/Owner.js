@@ -29,6 +29,10 @@ const ownerSchema = new mongoose.Schema({
     bank_IFSC_code: {
         type: String,
         unique: true
+    },
+    role: {
+        type: String,
+        enum: ['owner']
     }
 }, {timestamps: true});
 
