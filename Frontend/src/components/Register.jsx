@@ -25,7 +25,7 @@ const Register = ()=>{
                 return navigate("/registerOwner", { state: registerData });
             }
             signupUser(registerData);
-            navigate("/login");
+            navigate("/verify-email");
             
         }catch(error){
             console.log("Cannot send register details to backend", error);

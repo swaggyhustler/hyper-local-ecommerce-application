@@ -29,7 +29,7 @@ const OwnerRegistration = ()=>{
         }
         try{
             signupOwner(registerData);
-            navigate('/login');
+            navigate('/verify-email');
         }catch(error){
             console.log("Cannot send register details to backend", error);
         }

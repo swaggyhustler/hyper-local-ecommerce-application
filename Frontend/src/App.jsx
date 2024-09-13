@@ -12,11 +12,15 @@ import ShopDetails from './components/ShopDetails';
 import Cart from './components/Cart';
 import { useAuthStore } from './store/authStore';
 import { useEffect } from 'react';
+import VerifyEmail from './components/VerifyEmail';
 
 const ProtectedRoute = ({children})=>{
-const {isAuthenticated} = useAuthStore();
+const {isAuthenticated, user} = useAuthStore();
   if(!isAuthenticated){
     return <Navigate to='/' replace/>;
+  }
+  if(!user.isVerified){
+    return <Navigate to='/verify-email' replace/>;
   }
   return children;
 }
@@ -27,8 +31,8 @@ const App = () =>{
     checkAuth();
   }, [checkAuth]);
   
-  console.log("is Authenticated ", isAuthenticated);
-  console.log("User ", user);
+  // console.log("is Authenticated ", isAuthenticated);
+  // console.log("User ", user.isVerified);
   
   return (
     <>
@@ -39,6 +43,7 @@ const App = () =>{
       <Route path='/login' element={<Login />}/>
       <Route path='/registerOwner' element={<OwnerRegistration />} />
       <Route path='/register' element={<Register />}/> 
+      <Route path='/verify-email' element={<VerifyEmail />} />
       <Route path='/home' 
         element={
           <ProtectedRoute>

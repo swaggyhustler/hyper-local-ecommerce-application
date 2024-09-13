@@ -69,9 +69,22 @@ export const useAuthStore = create((set)=>({
         set({isCheckingAuth: true, error: null});
         try{
             const response = await axios.get(`${API_URL}/check-auth`);
-            set({isCheckingAuth: false, isAuthenticated: true, user: response.data})
+            set({isCheckingAuth: false, isAuthenticated: true, user: response.data.data});
         }catch(error){
             set({error: error.response.data.message, isCheckingAuth: false, isAuthenticated: false});
+        }
+    },
+
+    verifyEmail: async (data)=>{
+        set({isLoading: true, error: null});
+        try{
+            const response = await axios.post(`${API_URL}/verify-email`, data);
+            set({isLoading: false, user: response.data.data, isAuthenticated: true, });
+            toast.success(response.data.message);
+        }catch(error){
+            toast.error(error.response.data.message);
+            set({isLoading: false, error: error.response.data.message});
+            throw error;
         }
     }
 }))
