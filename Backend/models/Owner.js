@@ -29,7 +29,16 @@ const ownerSchema = new mongoose.Schema({
     bank_IFSC_code: {
         type: String,
         unique: true
-    }
+    },
+    role: {
+        type: String
+    },
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
+    verificationToken: String,
+    verificationTokenExpiresAt: Date
 }, {timestamps: true});
 
 export default mongoose.model('Owners', ownerSchema);
