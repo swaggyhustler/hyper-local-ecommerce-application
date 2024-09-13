@@ -13,9 +13,12 @@ const checkAuth = async (req, res)=>{
         }else if(role == 'owner'){
             user = await Owner.findById(user_id);
         }else{
-            return res.status(401).json({message: "User not found", success: false});
+            return res.status(404).json({message: "User not found", success: false});
         }
 
+        if(user===null){
+            return res.status(404).json({message: 'User not found', success: false});
+        }
         res.status(200).json({
             message: "User is authorized", 
             success: true, 
@@ -48,11 +51,20 @@ const verifyEmail = async (req, res)=>{
             return res.status(401).json({message: "Cannot verify provided email", success: false});
         }
 
+        if(user===null){
+            return res.status(404).json({message: 'User not found', success: false});
+        }
+
         user.isVerified = true;
         user.verificationToken = undefined;
         user.verificationTokenExpiresAt = undefined;
         await user.save();
-        await sendWelcomeEmail(user.email, user.name);
+        
+        if(role==='owner'){
+            await sendWelcomeEmail(user.email, user.owner_name);
+        }else{
+            await sendWelcomeEmail(user.email, user.username);
+        }
 
         res.status(200).json({message: "Email verified successfully", success: true, data: {...user._doc, password: undefined}});
 
@@ -64,27 +76,31 @@ const verifyEmail = async (req, res)=>{
 
 const login = async (req, res)=>{
     const {email, password, role} = req.body;
-    let user=null;
+    try{
 
-    if(role==='user'){
-        user = await User.findOne({email});
-    }else if (role==='owner'){
-        user = await Owner.findOne({email});
-    }else{
-        return res.status(200).json({message: 'Please Select the role', success: false});
-    }
+        let user=null;
+        if(role==='user'){
+            user = await User.findOne({email});
+        }else if (role==='owner'){
+            user = await Owner.findOne({email});
+        }
+        if(user===null){
+            return res.status(404).json({message: 'User not found', success: false});
+        }
+        let userAuthenticated = await comparePassword(password, user.password);
 
-    if(user===null){
-        return res.status(200).json({message: 'Cannot fetch user with the details provided', success: false});
-    }
-
-    let userAuthenticated = await comparePassword(password, user.password);
-
-    if(userAuthenticated){
-        generateTokenAndSetCookie(res, user._id, user.role);
-        res.status(200).json({message: "User is Authenticated", success: true, data: user});
-    }else{
-        res.status(200).json({message: 'User is not Authenticated', success: false});
+        if(userAuthenticated){
+            if(user.role!=role){
+                return res.status(401).json({message: "Wrong credentials", success: false});
+            }
+            generateTokenAndSetCookie(res, user._id, user.role);
+            res.status(200).json({message: "User login successful", success: true, data: user});
+        }else{
+            res.status(404).json({message: 'Wrong Credentials', success: false});
+        }
+    }catch(error){
+        console.log(error.message);
+        res.status(500).json({message: "Internal Error", success: false});
     }
 }
 
@@ -93,7 +109,7 @@ const registerUser= async (req, res)=>{
         const {username, password, email, phone, role} = req.body;
         const existingUser = await User.findOne({email});
         if(existingUser){
-            return res.status(200).json({message: "User already exists", data: existingUser, success: false});
+            return res.status(405).json({message: "User already exists", data: existingUser, success: false});
         }
         const hashedPassword= await hashPassword(password);
         const verificationToken = Math.floor(100000+Math.random()*900000).toString();

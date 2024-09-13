@@ -41,15 +41,14 @@ export const useAuthStore = create((set)=>({
     },
 
     login: async (loginData)=>{
-        set({isLoading: true, error: null, user: null});
+        set({isLoading: true, error: null, user: null, message: null});
         try{
             const response = await axios.post(`${API_URL}/login`, loginData);
+            set({isLoading: false, user: response.data.data, isAuthenticated: true, message: response.data.message});
             toast.success(response.data.message);
-            set({isLoading: false, user: response.data.data, isAuthenticated: true});
         }catch(error){
             toast.error(error.response.data.message);
-            set({isLoading: false, error: error.response.data.message});
-            throw error;
+            set({isLoading: false, error: error.message});
         }
     },
 
@@ -71,7 +70,7 @@ export const useAuthStore = create((set)=>({
             const response = await axios.get(`${API_URL}/check-auth`);
             set({isCheckingAuth: false, isAuthenticated: true, user: response.data.data});
         }catch(error){
-            set({error: error.response.data.message, isCheckingAuth: false, isAuthenticated: false});
+            set({error: error.message, isCheckingAuth: false, isAuthenticated: false});
         }
     },
 

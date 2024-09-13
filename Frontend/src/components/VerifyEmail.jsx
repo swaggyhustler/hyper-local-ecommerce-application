@@ -34,7 +34,7 @@ const VerifyEmail = ()=>{
                 <h3 className="text-center text-2xl font-bold my-4 text-blue-300">Verify Email</h3>
                 <div className="mb-5">
                     <label htmlFor="code" className="block mb-2 text-sm font-medium text-gray-900 ">Code</label>
-                    <input type="text" name="code" id="code" onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@example.com" required />
+                    <input type="text" name="code" id="code" onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="enter you code here" required />
                 </div>
                 <div className='flex flex-row gap-6'>
                     <div className="flex items-center mb-4">

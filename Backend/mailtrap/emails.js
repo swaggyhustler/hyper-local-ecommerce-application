@@ -32,7 +32,7 @@ const sendWelcomeEmail = async (email, name)=>{
         from: 'subhashgedam10@gmail.com',
         to: email,
         subject: 'Welcome to HyperLocal',
-        html: WELCOME_EMAIL_TEMPLATE.replace('{name}', name)
+        html: WELCOME_EMAIL_TEMPLATE.replace('{name}', name.charAt(0).toUpperCase() + name.slice(1))
       },
         function (err, data) {
             if (err) {
