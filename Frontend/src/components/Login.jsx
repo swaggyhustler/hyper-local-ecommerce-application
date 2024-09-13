@@ -8,7 +8,7 @@ import {useSelector, useDispatch} from 'react-redux';
 const Login = ()=>{
     const [loginData, setLoginData] = useState(null);
     const navigate=useNavigate()
-    const {success, message} = useSelector((state)=>state.auth);
+    
     const dispatch = useDispatch();
 
     const handleChange=(e)=>{

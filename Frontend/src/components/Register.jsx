@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 // import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import { registerUser } from '../store/authSlice.js';
+
 import { toast } from 'react-toastify';
 const Register = () => {
     const [registerData, setRegisterData] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {success, error}= useSelector((state)=>state.auth);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
