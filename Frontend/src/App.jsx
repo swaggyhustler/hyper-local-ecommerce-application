@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Shops from './components/Shops';
 import SearchPage from './components/SearchPage';
 import ShopDetails from './components/ShopDetails';
+import Cart from './components/Cart';
 const App = () =>{
   return (
     <>
@@ -16,14 +17,15 @@ const App = () =>{
     <Navbar />
     <Routes>
       <Route path='/' element={<Login />}/>
-      {/* <Route path='/' element={<Home />} /> */}
-      <Route path='/home' element={<h1>This is awesome!</h1>}/>
+      <Route path='/home' element={<Home />} />
+      {/* <Route path='/home' element={<h1>This is awesome!</h1>}/> */}
       <Route path='/login' element={<Login />}/>
       <Route path='/registerOwner' element={<OwnerRegistration />} />
       <Route path='/register' element={<Register />}/> 
       <Route path='/shops' element={<Shops/>}/>
       <Route path='/search' element={<SearchPage/>}/>
       <Route path='/shopDetails' element={<ShopDetails/>}/>
+      <Route path='/cart' element={<Cart/>}/>
     </Routes>
     </>
   )
