@@ -19,6 +19,7 @@ const SearchPage = () => {
             setLoadng(true)
             const response=await axios.post("http://localhost:5000/api/v1/search/product",{coordinates:location,keyword:searchInput})
             setSearchResults(response.data.data)
+            console.log(response.data)
             setLoadng(false)
             setSearchInput("")
             

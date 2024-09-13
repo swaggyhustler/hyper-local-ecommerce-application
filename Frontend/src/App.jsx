@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Shops from './components/Shops';
 import SearchPage from './components/SearchPage';
 import ShopDetails from './components/ShopDetails';
+import Cart from './components/Cart';
 const App = () =>{
   return (
     <>
@@ -23,6 +24,8 @@ const App = () =>{
       <Route path='/shops' element={<Shops/>}/>
       <Route path='/search' element={<SearchPage/>}/>
       <Route path='/shopDetails' element={<ShopDetails/>}/>
+      <Route path='/cart' element={<Cart/>}/>
+
     </Routes>
     </>
   )
