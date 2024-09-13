@@ -2,7 +2,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import OwnerRegistration from './components/OwnerRegistration';
 import Navbar from './components/Navbar';
-// import Home from './components/Home/index';
+import Home from './components/Home/index';
 import { ToastContainer } from 'react-toastify';
 import {Routes, Route, Navigate} from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css'; 
@@ -36,19 +36,43 @@ const App = () =>{
     <Navbar />
     <Routes>
       <Route path='/' element={<Login />}/>
-      {/* <Route path='/' element={<Home />} /> */}
-        <Route path='/home' element={
-          <ProtectedRoute>
-            <h1>This is you home!</h1>
-          </ProtectedRoute>
-          }/>
       <Route path='/login' element={<Login />}/>
       <Route path='/registerOwner' element={<OwnerRegistration />} />
       <Route path='/register' element={<Register />}/> 
-      <Route path='/shops' element={<Shops/>}/>
-      <Route path='/search' element={<SearchPage/>}/>
-      <Route path='/shopDetails' element={<ShopDetails/>}/>
-      <Route path='/cart' element={<Cart/>}/>
+      <Route path='/home' 
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/shops' 
+        element={
+          <ProtectedRoute>
+            <Shops/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/search' 
+        element={
+          <ProtectedRoute>
+          <SearchPage/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/shopDetails' 
+        element={
+          <ProtectedRoute><ShopDetails/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/cart' 
+        element={
+          <ProtectedRoute>
+          <Cart/>
+          </ProtectedRoute>
+        }
+      />
     </Routes>
     </>
   )
