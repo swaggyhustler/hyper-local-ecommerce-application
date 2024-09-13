@@ -29,12 +29,11 @@ const Register = () => {
             if (registerData.role === 'owner') {
                 return navigate("/registerOwner", { state: registerData });
             }
-
-            dispatch(registerUser(registerData));
-            if (success) {
+            const result = await axios.post("http://localhost:5000/api/v1/auth/register/user", registerData);
+            if(result.data.success){
                 toast.success("registration Successfull...!");
                 navigate("/login");
-            } else if(error) {
+            }else{
                 toast.error("Wrong Details...!");
             }
         } catch (error) {
@@ -42,14 +41,6 @@ const Register = () => {
         }
     }
 
-    // useEffect(()=>{
-    //     if (success) {
-    //         toast.success("registration Successfull...!");
-    //         navigate("/login");
-    //     } else if(error) {
-    //         toast.error("Wrong Details...!");
-    //     }
-    // }, [success, navigate, error]);
 
     return (
         <div className="h-screen w-full flex flex-col justify-center items-center">
