@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS
+import { useAuthStore } from '../store/authStore';
 
 const OwnerRegistration = ()=>{
     const [registerData, setRegisterData] = useState(null);
+    const {signupOwner} = useAuthStore();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -28,13 +28,8 @@ const OwnerRegistration = ()=>{
             console.log("Provide Data");
         }
         try{
-            const result = await axios.post("http://localhost:5000/api/v1/auth/register/owner", registerData);
-            if(result.data.success){
-                toast.success("registration Successfull...!");
-                navigate("/login");
-            }else{
-                toast.error("Wrong Details...!");
-            }
+            signupOwner(registerData);
+            navigate('/verify-email');
         }catch(error){
             console.log("Cannot send register details to backend", error);
         }

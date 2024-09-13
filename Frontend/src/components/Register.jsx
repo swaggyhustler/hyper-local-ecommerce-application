@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-// import { toast } from 'react-toastify';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAuthStore } from '../store/authStore';
 
-import { toast } from 'react-toastify';
-const Register = () => {
+const Register = ()=>{
     const [registerData, setRegisterData] = useState(null);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
+    const {signupUser} = useAuthStore();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,14 +24,10 @@ const Register = () => {
             if (registerData.role === 'owner') {
                 return navigate("/registerOwner", { state: registerData });
             }
-            const result = await axios.post("http://localhost:5000/api/v1/auth/register/user", registerData);
-            if(result.data.success){
-                toast.success("registration Successfull...!");
-                navigate("/login");
-            }else{
-                toast.error("Wrong Details...!");
-            }
-        } catch (error) {
+            signupUser(registerData);
+            navigate("/verify-email");
+            
+        }catch(error){
             console.log("Cannot send register details to backend", error);
         }
     }
