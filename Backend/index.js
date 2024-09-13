@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
+import payments from "./payments.js"
 
 dotenv.config();
 const app=express();
@@ -20,6 +21,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1', shopRoutes);
+app.use("/payment",payments)
+
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, ()=>{
