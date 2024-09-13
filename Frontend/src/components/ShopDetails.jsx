@@ -40,7 +40,7 @@ const ShopDetails = () => {
           ) : products.length === 0 ? (
             <p>No Products Available</p>
           ) : (
-            products.map((product, index) => <ProductCard product={{ ...product, shopName: shop.shopName, distance: shop.distance }}  key={index} searched={false} />)
+            products.map((product, index) => <ProductCard product={product} key={index} />)
           )}
         </div>
       </div>
