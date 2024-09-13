@@ -18,8 +18,14 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     role: {
-        type: String,
-    }
-});
+        type: String
+    },
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
+    verificationToken: String,
+    verificationTokenExpiresAt: Date
+}, {timestamps: true});
 
 export default mongoose.model('Users', userSchema);

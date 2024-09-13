@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import 'react-toastify/dist/ReactToastify.css'; // Import CSS
 import {useNavigate} from "react-router-dom"
 import { useAuthStore } from '../store/authStore';
 
@@ -27,7 +26,6 @@ const Login = ()=>{
             console.log("Cannot send login details to backend", error);
         }
     }
-
     return (
         <div className="h-screen w-full flex justify-center items-center ">
             <form className="max-w-lg mx-auto shadow-lg p-6 rounded-lg" onSubmit={handleSubmit}>

@@ -48,7 +48,7 @@ const login = async (req, res)=>{
     let userAuthenticated = await comparePassword(password, user.password);
 
     if(userAuthenticated){
-        const token = generateTokenAndSetCookie(res, user._id, user.role);
+        generateTokenAndSetCookie(res, user._id, user.role);
         res.status(200).json({message: "User is Authenticated", success: true, data: user});
     }else{
         res.status(200).json({message: 'User is not Authenticated', success: false});
@@ -57,14 +57,14 @@ const login = async (req, res)=>{
 
 const registerUser= async (req, res)=>{
     try{
-        const {username, password, email, phone} = req.body;
+        const {username, password, email, phone, role} = req.body;
         const existingUser = await User.findOne({email});
         if(existingUser){
             return res.status(200).json({message: "User already exists", data: existingUser, success: false});
         }
         const hashedPassword= await hashPassword(password);
-        const newUser = await User.create({username, password: hashedPassword, email, phone});
-        newUser.save();
+        const newUser = new User({username, password: hashedPassword, email, phone, role});
+        await newUser.save();
         res.status(201).json({message: "User registered successfully", data: newUser, success: true});
     }catch(error){
         console.log("Cannot register User to the Application");
