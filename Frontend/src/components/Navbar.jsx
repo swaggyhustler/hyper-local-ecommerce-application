@@ -3,14 +3,9 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import logo from "../assets/logo.png"
-import {useSelector} from "react-redux"
 import { useAuthStore } from "../store/authStore";
 const Navbar = () => {
-  const {logout, user} = useAuthStore();
-  const handleLogout=async ()=>{
-    await logout();
-  }
-  // const role=useSelector((state)=>state.user.role) || "user"
+  const {user} = useAuthStore();
   let role = 'user';
   if(user!==null){
     role = user.role;
@@ -39,8 +34,8 @@ const Navbar = () => {
         {
           role!=="user" &&  
           <>
-           <Link to="/addshop">Add Shop</Link>
-           <Link to="/addshop">My Shops</Link>
+           <Link to="/addShop">Add Shop</Link>
+           <Link to="/myshop">My Shops</Link>
 
           </>
         }

@@ -1,22 +1,21 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {useAuthStore } from "../store/authStore.js"
 const UserDetails = () => {
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   const {logout} = useAuthStore();
   const handleLogout = async() => {
     await logout();
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200">
+    <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 m-12">
       <div className="p-8">
         <h2 className="text-3xl font-bold text-gray-800 mb-6">User Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col">
             <span className="text-sm font-medium text-gray-600">Username:</span>
-            <p className="text-lg text-gray-800">{user.username}</p>
+            <p className="text-lg text-gray-800">{user.username || user.owner_name}</p>
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-medium text-gray-600">Email:</span>

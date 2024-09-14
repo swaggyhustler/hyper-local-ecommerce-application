@@ -17,6 +17,10 @@ import { useDispatch } from 'react-redux';
 import {setUser} from './store/userSlice';
 import Order from './components/Order';
 import UserDetails from './components/UserDetails';
+import RegisterShop from './components/RegisterShop';
+import MyShops from './components/MyShops';
+import AddProduct from './components/AddProduct';
+import ShowProducts from './components/ShowProducts';
 
 const ProtectedRoute = ({children})=>{
 const {isAuthenticated, user} = useAuthStore();
@@ -88,18 +92,45 @@ const App = () =>{
       />
       <Route path='/orders' element={
         <ProtectedRoute>
-                  <Order />
+          <Order />
         </ProtectedRoute>
-      
-        } />
+        } 
+      />
       <Route path='/userDetails' 
         element={
           <ProtectedRoute>
-          <UserDetails/>
+            <UserDetails/>
           </ProtectedRoute>
         }
       />
-        
+      <Route path='/addShop' 
+        element={
+          <ProtectedRoute>
+            <RegisterShop/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/myShop' 
+        element={
+          <ProtectedRoute>
+            <MyShops/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/addProduct' 
+        element={
+          <ProtectedRoute>
+            <AddProduct/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/showProducts' 
+        element={
+          <ProtectedRoute>
+            <ShowProducts />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
     </>
   )

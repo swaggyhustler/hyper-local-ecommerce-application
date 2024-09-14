@@ -13,6 +13,7 @@ const ProductCard = ({ product, searched = true,buttonDisable=false,deleteButton
     dispatch(addToCart(product));
     toast.success("Item added to cart")
   };
+
   const removeFromCartHandler=()=>{
     console.log("clcikin")
     dispatch(removeFromCart(product))
