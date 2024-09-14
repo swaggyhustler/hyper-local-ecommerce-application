@@ -1,6 +1,7 @@
 import express from 'express';
 import shopRoutes from './routes/shopRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1', shopRoutes);
+app.use('/api/v1', orderRoutes);
 app.use("/payment",payments)
 
 

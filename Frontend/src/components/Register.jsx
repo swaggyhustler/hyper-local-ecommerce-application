@@ -22,6 +22,7 @@ const Register = ()=>{
                 return;
             }
             if (registerData.role === 'owner') {
+                console.log(registerData);
                 return navigate("/registerOwner", { state: registerData });
             }
             signupUser(registerData);

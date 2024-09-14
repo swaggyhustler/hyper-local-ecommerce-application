@@ -5,11 +5,12 @@ import { FaUser } from "react-icons/fa";
 import logo from "../assets/logo.png"
 import { useAuthStore } from "../store/authStore";
 const Navbar = () => {
-  const {logout} = useAuthStore();
-  const handleLogout=async ()=>{
-    await logout();
+  const {user} = useAuthStore();
+  let role = 'user';
+  if(user!==null){
+    role = user.role;
   }
-  const user={role:"user"}
+
   return (
     <nav className="w-full h-20  flex justify-between items-center px-10 bg-gray-100">
 
@@ -20,31 +21,35 @@ const Navbar = () => {
       </div>
       <div className="w-[60%] font-semibold flex justify-evenly">
         <Link to="/home">Home</Link>
+        <Link to="/shops">All Shops</Link>
        
         {
-          user.role=="user" && 
+          role==="user" && 
            <>
            <Link to="/orders">My Orders</Link>
            <Link to="/search">Search Products</Link>
-           <Link to="/shops">All Shops</Link>
+           
            </>
-          
         }
         {
-          user.role!=="user" &&   <Link to="/addshop">Add Shop</Link>
+          role!=="user" &&  
+          <>
+           <Link to="/addShop">Add Shop</Link>
+           <Link to="/myshop">My Shops</Link>
 
+          </>
         }
         
 
       </div>
       <div className="w-[10%] text-3xl flex justify-around">
         {
-          user.role=="user" &&  <Link to="/cart"><FaShoppingCart /></Link>
+          role=="user" &&  <Link to="/cart"><FaShoppingCart /></Link>
         }
        
         <Link to="/userDetails"><FaUser/></Link>
       </div>
-      <button className="bg-gray-600 py-3 px-1" onClick={handleLogout}>Logout</button>
+      
     </nav>
     
   )

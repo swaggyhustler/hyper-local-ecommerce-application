@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const addShop = async (req, res)=>{
     try{
-        // console.log(req.file);
         const image_url = await uploadImage(req.file);
         const {shopName, coordinates, owner_id} = req.body;
         const modifiedCoords = coordinates.split(',');
@@ -115,4 +114,26 @@ const getProducts = async (req, res)=>{
     }
 }
 
-export {addShop, addProduct, searchProduct, getProducts};
+const getShopsByOwner = async (req, res)=>{
+    const {owner_id} = req.params;
+    try{
+        const shops = await Shop.find({owner_id});
+        res.status(200).json({message: "Shops associated to owner fetched successfully", success: true, data: shops});
+    }catch(error){
+        console.log("Cannot fetch shops associated to owner");
+        res.status(500).json({message: "Cannot fetch shops associated to owner", success: false});
+    }
+}
+
+const deleteProduct = async (req, res)=>{
+    const {product_id} = req.params;
+    try{
+        await Products.deleteOne({_id: product_id});
+        res.status(200).json({message: "Product Deleted Successfully", success: true});
+    }catch(error){
+        console.log("Cannot delete the product");
+        res.status(500).json({message: "Cannot delete the product", success: true})
+    }
+}
+
+export {addShop, addProduct, searchProduct, getProducts, getShopsByOwner, deleteProduct};

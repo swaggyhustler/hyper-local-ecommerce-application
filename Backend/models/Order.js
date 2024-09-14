@@ -5,9 +5,12 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
     },
-    product_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Products'
+    // products: {
+    //     type: mongoose.Schema.Types.Array,
+    //     required: true
+    // }
+    product: {
+        type: Object
     }
 }, {timestamps: true});
 

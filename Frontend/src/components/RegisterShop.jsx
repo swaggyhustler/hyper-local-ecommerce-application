@@ -1,84 +1,77 @@
-import {useState, useEffect} from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {useState} from 'react';
+import { useAuthStore } from '../store/authStore';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Import CSS
-
+import Spinner from './Spinner';
 const RegisterShop = ()=>{
-    const [registerData, setRegisterData] = useState(null);
-    const navigate = useNavigate();
-    const location = useLocation();
-    const {owner_id} = location.state;
+    const [loading, setLoading] = useState(false);
+    const [shopData, setShopData] = useState(null);
+    const [file, setFile] = useState(null);
+    const {user} = useAuthStore();
+    const onFileChange = (e)=>{
+        setFile(e.target.files[0]);
+    }
 
     const handleChange=(e)=>{
         const {name, value} = e.target;
-        setRegisterData({
-            ...registerData, [name]: value
+        setShopData({
+            ...shopData, [name]: value
         });
     }
-
-    const fetchLocation = ()=>{
-        return new Promise((resolve, reject)=>{
-          navigator.geolocation.getCurrentPosition((position)=>{
-            resolve({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            });
-            }, (error)=>{
-            console.log("E: Error getting users current locaiton");
-            reject(error);
-          });
-        });
-    }
-    
-    // const handleLocation = ()=>{
-    //     fetchLocation().then((res)=>{
-    //         setRegisterData({...registerData, ["coordinates"]: [res.latitude, res.longitude], ["owner_id"]: owner_id});
-    //     });
-    // }
-
-    useEffect(()=>{
-        fetchLocation().then((res)=>{
-            setRegisterData({...registerData, ["coordinates"]: [res.latitude, res.longitude], ["owner_id"]: owner_id});
-        });
-    }, []);
-
     const handleSubmit= async (e)=>{
+        setLoading(true);
         e.preventDefault();
-        setRegisterData({...registerData, ["owner_id"]: owner_id});
-        if(!registerData){
+        setShopData({...shopData, ['owner_id']: user._id});
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('shopName', shopData.shop_name);
+        formData.append('coordinates', shopData.coordinates);
+        formData.append('owner_id', user._id);
+
+        if(!shopData || !file){
             console.log("Provide Data");
         }
         try{
-            const result = await axios.post("http://localhost:5000/api/v1/add/shop", registerData);
-            if(result.data.success){
-                toast.success("Shop registration Successfull...!");
-                navigate('/login');
-            }else{
-                toast.error("Wrong Details...!");
-            }
+            const response = await axios.post(`http://localhost:5000/api/v1/add/shop`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+            // const response = await axios.post(`http://localhost:5000/api/v1/add/shop/${shopData.owner_id}`);
+            toast.success(response.data.message);
+            setLoading(false);
+            setFile(null);
+            setShopData(null);
         }catch(error){
-            console.log("Cannot send register details to backend", error);
+            setLoading(false);
+            console.log("Cannot send login details to backend", error);
+            toast.error(error.response.data.message);
         }
     }
-
     return (
-        <div className="h-screen w-full flex flex-col justify-center items-center">
-            <form className="max-w-md mx-auto shadow-2xl p-6 rounded-lg" onSubmit={handleSubmit}>
-            <h1 className="text-center text-3xl font-bold my-6">Register Shop</h1>
-            <div className="relative z-0 w-full mb-5 group">
-                <input type="text" name="shopName" id="shopName" onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-dark dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label htmlFor="shopName" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Shop Name</label>
-            </div>
-            {/* <div className="relative z-0 w-full mb-5 group">
-                <input type="email" name="email" id="floating_email" onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-dark dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
-            </div> */}
-            
-            {/* <button onClick={} className=" mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit Current Location</button> */}
-            
-            <button type="submit" className=" mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+        <div className="h-screen w-full flex justify-center items-center ">
+            {loading?<Spinner />:
+            <form className="max-w-lg mx-auto shadow-lg p-6 rounded-lg" onSubmit={handleSubmit}>
+                <h1 className="text-3xl font-bold text-center inline-block w-96">Register You Shop Below</h1>
+                <h3 className="text-center text-2xl font-bold my-4 text-blue-300">Shop Details</h3>
+                <div className="mb-5">
+                    <label htmlFor="shop_name" className="block mb-2 text-sm font-medium text-gray-900 ">Shop Name</label>
+                    <input type="text" name="shop_name" id="shop_name" onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder='Enter you shop name here' required />
+                </div>
+                <div className="mb-5">
+                    <label htmlFor="image" className="block mb-2 text-sm font-medium text-gray-900 ">Shop Picture</label>
+                    <input type="file" name="image" id="image" onChange={onFileChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                </div>
+                <div className="mb-5">
+                    <label htmlFor="coordinates" className="block mb-2 text-sm font-medium text-gray-900 ">Shop Coordinates</label>
+                    <input type="text" name="coordinates" id="coordinates" onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Latitude, Longitude" required />
+                </div>
+
+                <div className='flex justify-around'>
+                <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit Details</button>
+                </div>
             </form>
+            }
         </div>
     )
 }

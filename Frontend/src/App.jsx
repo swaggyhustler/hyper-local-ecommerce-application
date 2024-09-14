@@ -13,6 +13,14 @@ import Cart from './components/Cart';
 import { useAuthStore } from './store/authStore';
 import { useEffect } from 'react';
 import VerifyEmail from './components/VerifyEmail';
+import { useDispatch } from 'react-redux'; 
+import {setUser} from './store/userSlice';
+import Order from './components/Order';
+import UserDetails from './components/UserDetails';
+import RegisterShop from './components/RegisterShop';
+import MyShops from './components/MyShops';
+import AddProduct from './components/AddProduct';
+import ShowProducts from './components/ShowProducts';
 
 const ProtectedRoute = ({children})=>{
 const {isAuthenticated, user} = useAuthStore();
@@ -26,17 +34,21 @@ const {isAuthenticated, user} = useAuthStore();
 }
 
 const App = () =>{
-  const {checkAuth, user, isAuthenticated} = useAuthStore();
+  const dispatch = useDispatch();
+  const {checkAuth, user} = useAuthStore();
   useEffect(()=>{
     checkAuth();
   }, [checkAuth]);
   
+  useEffect(()=>{
+    dispatch(setUser(user));
+  }, [user, dispatch]);
   // console.log("is Authenticated ", isAuthenticated);
   // console.log("User ", user.isVerified);
   
   return (
     <>
-    <ToastContainer />
+    <ToastContainer position='top-center' autoClose={2000}/>
     <Navbar />
     <Routes>
       <Route path='/' element={<Login />}/>
@@ -75,6 +87,47 @@ const App = () =>{
         element={
           <ProtectedRoute>
           <Cart/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/orders' element={
+        <ProtectedRoute>
+          <Order />
+        </ProtectedRoute>
+        } 
+      />
+      <Route path='/userDetails' 
+        element={
+          <ProtectedRoute>
+            <UserDetails/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/addShop' 
+        element={
+          <ProtectedRoute>
+            <RegisterShop/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/myShop' 
+        element={
+          <ProtectedRoute>
+            <MyShops/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/addProduct' 
+        element={
+          <ProtectedRoute>
+            <AddProduct/>
+          </ProtectedRoute>
+        }
+      />
+      <Route path='/showProducts' 
+        element={
+          <ProtectedRoute>
+            <ShowProducts />
           </ProtectedRoute>
         }
       />
