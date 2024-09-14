@@ -3,9 +3,11 @@ import { addToCart } from "../../store/cartSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { removeFromCart } from "../../store/cartSlice";
-const ProductCard = ({ product, searched = true,buttonDisable=false,deleteButton=false,showDate=false,date}) => {
+import { productStore } from "../../store/productStore";
+import axios from 'axios';
+const ProductCard = ({ product, searched = true, deleteProduct=false, buttonDisable=false,deleteButton=false,showDate=false,date}) => {
   const { name, price, description, image_url, shopName, distance } = product;
-  
+  const {removeProduct, products} = productStore();
   const dispatch = useDispatch();
   const formattedDate = new Date(date).toLocaleDateString();
 
@@ -18,6 +20,17 @@ const ProductCard = ({ product, searched = true,buttonDisable=false,deleteButton
     console.log("clcikin")
     dispatch(removeFromCart(product))
   }
+
+  const handleDeleteProduct = async ()=>{
+    try{
+      const response =  await axios.delete(`http://localhost:5000/api/v1/product/${product._id}`);
+      toast.success(response.data.message);
+      removeProduct(product._id, products);
+    }catch(error){
+      toast.error(error.response.data.message);
+    }
+  }
+
   return (
     <div className="border rounded-lg shadow-lg p-4 flex flex-col items-center bg-white w-full max-w-xs lg:w-1/5 h-[400px]">
       <div className="w-full h-48 overflow-hidden rounded-t-lg">
@@ -57,6 +70,14 @@ const ProductCard = ({ product, searched = true,buttonDisable=false,deleteButton
       >
         Remove
       </button>
+      }
+      {
+        deleteProduct && 
+        <button 
+          onClick={handleDeleteProduct}
+          className="bg-red-500 text-white mt-4 py-2 px-4 rounded hover:bg-red-600 transition duration-300 w-full">
+          Remove
+        </button>
       }
        {
               showDate && 

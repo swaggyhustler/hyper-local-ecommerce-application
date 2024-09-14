@@ -125,4 +125,15 @@ const getShopsByOwner = async (req, res)=>{
     }
 }
 
-export {addShop, addProduct, searchProduct, getProducts, getShopsByOwner};
+const deleteProduct = async (req, res)=>{
+    const {product_id} = req.params;
+    try{
+        await Products.deleteOne({_id: product_id});
+        res.status(200).json({message: "Product Deleted Successfully", success: true});
+    }catch(error){
+        console.log("Cannot delete the product");
+        res.status(500).json({message: "Cannot delete the product", success: true})
+    }
+}
+
+export {addShop, addProduct, searchProduct, getProducts, getShopsByOwner, deleteProduct};

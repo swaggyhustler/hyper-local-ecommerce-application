@@ -23,7 +23,6 @@ const AddProduct = ()=>{
         });
     }
     const handleSubmit= async (e)=>{
-        console.log(shop_id);
         setLoading(true);
         e.preventDefault();
         const formData = new FormData();

@@ -21,7 +21,6 @@ const ShopCard = ({ shop, checkit=true, ownerSide=false}) => {
   }
   
   const showProductsHandler = () =>{
-    console.log("from shopcard ",shop_id);
     navigate('/showProducts', {
       state: {shop_id: shop_id}
     });
