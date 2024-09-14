@@ -3,13 +3,19 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import logo from "../assets/logo.png"
+import {useSelector} from "react-redux"
 import { useAuthStore } from "../store/authStore";
 const Navbar = () => {
-  const {logout} = useAuthStore();
+  const {logout, user} = useAuthStore();
   const handleLogout=async ()=>{
     await logout();
   }
-  const user={role:"user"}
+  // const role=useSelector((state)=>state.user.role) || "user"
+  let role = 'user';
+  if(user!==null){
+    role = user.role;
+  }
+
   return (
     <nav className="w-full h-20  flex justify-between items-center px-10 bg-gray-100">
 
@@ -20,31 +26,35 @@ const Navbar = () => {
       </div>
       <div className="w-[60%] font-semibold flex justify-evenly">
         <Link to="/home">Home</Link>
+        <Link to="/shops">All Shops</Link>
        
         {
-          user.role=="user" && 
+          role==="user" && 
            <>
            <Link to="/orders">My Orders</Link>
            <Link to="/search">Search Products</Link>
-           <Link to="/shops">All Shops</Link>
+           
            </>
-          
         }
         {
-          user.role!=="user" &&   <Link to="/addshop">Add Shop</Link>
+          role!=="user" &&  
+          <>
+           <Link to="/addshop">Add Shop</Link>
+           <Link to="/addshop">My Shops</Link>
 
+          </>
         }
         
 
       </div>
       <div className="w-[10%] text-3xl flex justify-around">
         {
-          user.role=="user" &&  <Link to="/cart"><FaShoppingCart /></Link>
+          role=="user" &&  <Link to="/cart"><FaShoppingCart /></Link>
         }
        
         <Link to="/userDetails"><FaUser/></Link>
       </div>
-      <button className="bg-gray-600 py-3 px-1" onClick={handleLogout}>Logout</button>
+      
     </nav>
     
   )

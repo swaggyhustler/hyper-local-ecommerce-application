@@ -15,6 +15,8 @@ import { useEffect } from 'react';
 import VerifyEmail from './components/VerifyEmail';
 import { useDispatch } from 'react-redux'; 
 import {setUser} from './store/userSlice';
+import Order from './components/Order';
+import UserDetails from './components/UserDetails';
 
 const ProtectedRoute = ({children})=>{
 const {isAuthenticated, user} = useAuthStore();
@@ -42,7 +44,7 @@ const App = () =>{
   
   return (
     <>
-    <ToastContainer />
+    <ToastContainer position='top-center' autoClose={2000}/>
     <Navbar />
     <Routes>
       <Route path='/' element={<Login />}/>
@@ -84,6 +86,20 @@ const App = () =>{
           </ProtectedRoute>
         }
       />
+      <Route path='/orders' element={
+        <ProtectedRoute>
+                  <Order />
+        </ProtectedRoute>
+      
+        } />
+      <Route path='/userDetails' 
+        element={
+          <ProtectedRoute>
+          <UserDetails/>
+          </ProtectedRoute>
+        }
+      />
+        
     </Routes>
     </>
   )

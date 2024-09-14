@@ -3,10 +3,11 @@ import { addToCart } from "../../store/cartSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { removeFromCart } from "../../store/cartSlice";
-const ProductCard = ({ product, searched = true,buttonDisable=false,deleteButton=false}) => {
+const ProductCard = ({ product, searched = true,buttonDisable=false,deleteButton=false,showDate=false,date}) => {
   const { name, price, description, image_url, shopName, distance } = product;
   
   const dispatch = useDispatch();
+  const formattedDate = new Date(date).toLocaleDateString();
 
   const addCartHandler = () => {
     dispatch(addToCart(product));
@@ -36,6 +37,7 @@ const ProductCard = ({ product, searched = true,buttonDisable=false,deleteButton
             <p>{shopName}</p>
             <p className="font-bold">Distance:</p>
             <p>{distance} KM</p>
+           
           </div>
         )}
         
@@ -55,6 +57,14 @@ const ProductCard = ({ product, searched = true,buttonDisable=false,deleteButton
         Remove
       </button>
       }
+       {
+              showDate && 
+              <>
+              <p className="font-bold">Ordered Date</p>
+              <p>{formattedDate}</p>
+              </>
+
+            }
       
       </div>
     </div>
