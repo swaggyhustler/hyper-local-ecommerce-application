@@ -257,41 +257,54 @@ Path Params Data
     "success": true,
     "data": [
         {
-            "_id": "66e513f2d7cbf10d8b02cd3b",
+            "_id": "66e527e046b982f30a5b12d1",
             "user_id": "66e474a0bd0653b02f6925fc",
-            "products": [
-                {
-                    "_id": "66dda3e8d4763fe8e80bafb7",
-                    "name": "Earphones",
-                    "price": 1200,
-                    "shop_id": "66dc4d48e54ef90efc394559",
-                    "description": "well reliable wireless earphones",
-                    "image_url": "https://firebasestorage.googleapis.com/v0/b/e-commerce-af37e.appspot.com/o/shops_images%2F1725801447732?alt=media&token=c772b28f-2f16-4566-af6c-a24f992c6f32",
-                    "__v": 0
-                },
-                {
-                    "_id": "66ddd9e6af4c87f386cc7b04",
-                    "name": "Books",
-                    "price": 1560,
-                    "shop_id": "66dc4d48e54ef90efc394559",
-                    "description": "Multiple books for kids",
-                    "image_url": "https://firebasestorage.googleapis.com/v0/b/e-commerce-af37e.appspot.com/o/shops_images%2F1725815269695?alt=media&token=4d9594ed-361a-4b48-b1bd-854074c9b7b3",
-                    "__v": 0
-                },
-                {
-                    "_id": "66ddda2aaf4c87f386cc7b07",
-                    "name": "Tshirt",
-                    "price": 699,
-                    "shop_id": "66dc4d48e54ef90efc394559",
-                    "description": "Black Polo Tshirt with comfortable fit",
-                    "image_url": "https://firebasestorage.googleapis.com/v0/b/e-commerce-af37e.appspot.com/o/shops_images%2F1725815337772?alt=media&token=d5a9dc2e-3d62-4ab6-b77f-adf2cda89b11",
-                    "__v": 0
-                }
-            ],
-            "createdAt": "2024-09-14T04:41:22.791Z",
-            "updatedAt": "2024-09-14T04:41:22.791Z",
+            "product": {
+                "_id": "66ddd9e6af4c87f386cc7b04",
+                "name": "Books",
+                "price": 1560,
+                "shop_id": "66dc4d48e54ef90efc394559",
+                "description": "Multiple books for kids",
+                "image_url": "https://firebasestorage.googleapis.com/v0/b/e-commerce-af37e.appspot.com/o/shops_images%2F1725815269695?alt=media&token=4d9594ed-361a-4b48-b1bd-854074c9b7b3",
+                "__v": 0
+            },
+            "createdAt": "2024-09-14T06:06:24.424Z",
+            "updatedAt": "2024-09-14T06:06:24.424Z",
+            "__v": 0
+        },
+        {
+            "_id": "66e527e046b982f30a5b12d2",
+            "user_id": "66e474a0bd0653b02f6925fc",
+            "product": {
+                "_id": "66ddda2aaf4c87f386cc7b07",
+                "name": "Tshirt",
+                "price": 699,
+                "shop_id": "66dc4d48e54ef90efc394559",
+                "description": "Black Polo Tshirt with comfortable fit",
+                "image_url": "https://firebasestorage.googleapis.com/v0/b/e-commerce-af37e.appspot.com/o/shops_images%2F1725815337772?alt=media&token=d5a9dc2e-3d62-4ab6-b77f-adf2cda89b11",
+                "__v": 0
+            },
+            "createdAt": "2024-09-14T06:06:24.424Z",
+            "updatedAt": "2024-09-14T06:06:24.424Z",
+            "__v": 0
+        },
+        {
+            "_id": "66e527e046b982f30a5b12d0",
+            "user_id": "66e474a0bd0653b02f6925fc",
+            "product": {
+                "_id": "66dda3e8d4763fe8e80bafb7",
+                "name": "Earphones",
+                "price": 1200,
+                "shop_id": "66dc4d48e54ef90efc394559",
+                "description": "well reliable wireless earphones",
+                "image_url": "https://firebasestorage.googleapis.com/v0/b/e-commerce-af37e.appspot.com/o/shops_images%2F1725801447732?alt=media&token=c772b28f-2f16-4566-af6c-a24f992c6f32",
+                "__v": 0
+            },
+            "createdAt": "2024-09-14T06:06:24.423Z",
+            "updatedAt": "2024-09-14T06:06:24.423Z",
             "__v": 0
         }
     ]
+}
 }
 ```

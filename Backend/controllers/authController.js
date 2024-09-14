@@ -43,7 +43,7 @@ const verifyEmail = async (req, res)=>{
                 verificationTokenExpiresAt: {$gt: Date.now()}   
             });
         }else if(role === 'owner'){
-            user = await User.findOne({
+            user = await Owner.findOne({
                 verificationToken: code,
                 verificationTokenExpiresAt: {$gt: Date.now()}
             });
@@ -134,7 +134,7 @@ const registerUser= async (req, res)=>{
 
 const registerOwner= async (req, res)=>{
     try{
-        const { owner_name, password, email, phone, bank_name, bank_account_no, bank_IFSC_code } = req.body;
+        const { owner_name, password, email, phone, bank_name, bank_account_no, bank_IFSC_code, role } = req.body;
         const existingOwner = await Owner.findOne({email});
         if(existingOwner){
             return res.status(200).json({message: "Owner already exists", data: existingOwner, success: false});
@@ -158,7 +158,7 @@ const registerOwner= async (req, res)=>{
         await sendVerificationEmail(newOwner.email, verificationToken);
         res.status(201).json({message: "Owner registered successfully", data: {...newOwner._doc, password: undefined}, success: true});
     }catch(error){
-        console.log("Cannot register Owner to the Application");
+        console.log("Cannot register Owner to the Application", error);
         res.status(500).json({message: "Cannot register Owner", success: false});
     }
 }

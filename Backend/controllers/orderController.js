@@ -15,7 +15,8 @@ const getOrders = async (req, res)=>{
     // { $project: { customerDetails: 1, _id: 0 } },  // Include only the output array
     // { $match: { customerDetails: { $ne: [] } } }   // Filter out empty arrays
     // ]);
-    const orders = await Order.find({user_id});
+    // const orders = await Order.find({user_id});
+    const orders = await Order.find().sort({ updatedAt: -1 });
 
     //  await orders.update({}, { $rename: { "_id": 'order_id' } });
 
@@ -32,11 +33,17 @@ const addOrder = async (req, res)=>{
         if(!user_id || !products){
             return res.status(402).json({message: "Please provide details", success: false});
         }
-        const newOrder = new Order({
-            user_id,
-            products
+        // const newOrder = new Order({
+        //     user_id,
+        //     products
+        // });
+        products.forEach(async (item)=>{
+            const newOrder = new Order({
+                user_id,
+                product: item
+            });
+            await newOrder.save();
         });
-        await newOrder.save();
         res.status(201).json({message: "Order details stored successfully", success: true});
     }catch(error){
         return res.status(500).json({message: "Cannot add Order Details", success: false});
