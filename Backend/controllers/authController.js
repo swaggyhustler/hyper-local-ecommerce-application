@@ -1,4 +1,4 @@
-import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js";
+import { sendVerificationEmail, sendWelcomeEmail } from "../nodemailer/emails.js";
 import Owner from "../models/Owner.js";
 import User from "../models/User.js";
 import { hashPassword, comparePassword } from "../utils/authUtility.js";

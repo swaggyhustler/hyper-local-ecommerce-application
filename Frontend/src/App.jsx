@@ -13,6 +13,8 @@ import Cart from './components/Cart';
 import { useAuthStore } from './store/authStore';
 import { useEffect } from 'react';
 import VerifyEmail from './components/VerifyEmail';
+import { useDispatch } from 'react-redux'; 
+import {setUser} from './store/userSlice';
 
 const ProtectedRoute = ({children})=>{
 const {isAuthenticated, user} = useAuthStore();
@@ -26,11 +28,15 @@ const {isAuthenticated, user} = useAuthStore();
 }
 
 const App = () =>{
+  const dispatch = useDispatch();
   const {checkAuth, user, isAuthenticated} = useAuthStore();
   useEffect(()=>{
     checkAuth();
   }, [checkAuth]);
   
+  useEffect(()=>{
+    dispatch(setUser(user));
+  }, [user, dispatch]);
   // console.log("is Authenticated ", isAuthenticated);
   // console.log("User ", user.isVerified);
   

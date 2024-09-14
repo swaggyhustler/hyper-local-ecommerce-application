@@ -1,13 +1,13 @@
 import {useState} from 'react';
 import {useNavigate} from "react-router-dom"
 import { useAuthStore } from '../store/authStore';
-import {useDispatch} from 'react-redux';
-import {setUser} from '../store/userSlice.js';
+// import {useDispatch} from 'react-redux';
+// import {setUser} from '../store/userSlice.js';
 
 const Login = ()=>{
     const [loginData, setLoginData] = useState(null);
     const navigate=useNavigate();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const {login} = useAuthStore();
 
     const handleChange=(e)=>{
@@ -24,7 +24,7 @@ const Login = ()=>{
         }
         try{
             await login(loginData);
-            dispatch(setUser(loginData));
+            // dispatch(setUser(loginData));
             navigate('/home');
         }catch(error){
             console.log("Cannot send login details to backend", error);
