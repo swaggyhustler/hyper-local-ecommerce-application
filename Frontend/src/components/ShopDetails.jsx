@@ -34,7 +34,7 @@ const ShopDetails = () => {
       </div>
       <div className="w-full flex flex-col items-center my-5">
         <h2 className="text-3xl font-semibold">Available <span className="text-4xl text-red-600">Products</span> in our Shop</h2>
-        <div className="flex justify-evenly flex-wrap w-full my-3">
+        <div className="flex justify-evenly flex-wrap w-full my-3 gap-5">
           {loading ? (
             <Spinner />
           ) : products.length === 0 ? (
