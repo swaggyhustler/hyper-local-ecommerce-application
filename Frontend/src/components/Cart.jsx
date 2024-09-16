@@ -17,6 +17,11 @@ const Cart = () => {
   }, [cartItems]);
 
   const paymentHandler = async () => {
+    console.log(cartItems)
+    if (cartItems.length==0){
+      toast.error("Please Add items to Cart to proceed further")
+      return
+    }
     try {
       const response = await axios.post("http://localhost:5000/payment/order", {
         amount: totalPrice * 100, // Amount in paise
@@ -110,7 +115,7 @@ const Cart = () => {
             Please add items to the cart to proceed further.
           </p>
         ) : (
-          <div className="flex justify-evenly w-full flex-wrap">
+          <div className="flex justify-evenly w-full flex-wrap gap-5">
             {cartItems?.map((item, index) => (
               <ProductCard
                 product={item}

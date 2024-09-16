@@ -16,7 +16,7 @@ const getOrders = async (req, res)=>{
     // { $match: { customerDetails: { $ne: [] } } }   // Filter out empty arrays
     // ]);
     // const orders = await Order.find({user_id});
-    const orders = await Order.find().sort({ updatedAt: -1 });
+    const orders = await Order.find({user_id}).sort({ updatedAt: -1 });
 
     //  await orders.update({}, { $rename: { "_id": 'order_id' } });
 
