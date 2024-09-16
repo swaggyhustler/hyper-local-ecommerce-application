@@ -6,7 +6,7 @@ const getNearestShops = async (req, res)=>{
     try{    
         console.log("requesting")
         const {coordinates} = req.body;
-
+    
         const data = await Shop.find({
             geometry: {
                 $near: {

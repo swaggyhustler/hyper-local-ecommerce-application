@@ -35,22 +35,24 @@ const ShopCard = ({ shop, checkit=true, ownerSide=false}) => {
           alt="Shop"
         />
       </a>
-      <div className="p-4">
+      <div className="p-4 text-center">
         <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-800">
           {shopName}
         </h5>
       {
         !ownerSide && 
-          <div className="flex items-center mb-4 gap-2 text-gray-600">
-          <div className="flex items-center ">
-            <FaClock className="mr-1 text-blue-500" />
-            <span className="text-sm font-medium">Duration: {duration} Min.</span>
-          </div>
-          <div className="flex items-center ">
-            <FaMapMarkerAlt className="mr-1 text-red-500" />
-            <span className="text-sm font-medium">Distance: {distance} Km</span>
-          </div>
+        <div className="flex justify-around w-full mb-4 text-gray-600">
+        <div className="flex flex-col items-center">
+          <FaClock className="text-blue-500 mb-1" />
+          <span className="text-sm font-medium">Duration</span>
+          <span className="text-sm">{duration} Min.</span>
         </div>
+        <div className="flex flex-col items-center">
+          <FaMapMarkerAlt className="text-red-500 mb-1" />
+          <span className="text-sm font-medium">Distance</span>
+          <span className="text-sm">{distance} Km</span>
+        </div>
+      </div>
       }
         {
           checkit && <p
